@@ -20,7 +20,7 @@
     padding-bottom: env(safe-area-inset-bottom, 0px);
   }
   *, *::before, *::after { box-sizing: inherit; }
-  html { scroll-padding-top: env(safe-area-inset-top, 0px); }
+  html { scroll-padding-top: env(safe-area-inset-top, 0px); scroll-behavior: smooth; }
   body {
     margin: 0;
     background: var(--neve);
@@ -173,6 +173,7 @@
     cursor: pointer;
   }
   .doar:disabled { opacity: 0.7; cursor: wait; }
+  a.doar { text-align: center; text-decoration: none; }
   .doar:focus-visible, .copiar:focus-visible { outline: 3px solid var(--tinta); outline-offset: 3px; }
 
   .pix {
@@ -219,6 +220,54 @@
 </head>
 <body>
 <main>
+
+  <!-- FOTO: o arquivo precisa estar na mesma pasta do index.html -->
+  <div class="foto"><img src="1000303741.jpg" alt="Snow"></div>
+
+  <section class="texto" id="doar-topo">
+    <h2>Escolha um valor para ajudar</h2>
+
+    <p class="meta">Meta: <strong>R$ 6.500,00</strong></p>
+
+    <div class="opcoes" role="radiogroup" aria-label="Valor da doação">
+      <button type="button" class="opcao" role="radio" aria-checked="false" data-valor="5">R$ 5</button>
+      <button type="button" class="opcao" role="radio" aria-checked="false" data-valor="10">R$ 10</button>
+      <button type="button" class="opcao" role="radio" aria-checked="false" data-valor="20">R$ 20</button>
+      <button type="button" class="opcao" role="radio" aria-checked="false" data-valor="50">R$ 50</button>
+      <button type="button" class="opcao" role="radio" aria-checked="false" data-valor="100">R$ 100</button>
+      <button type="button" class="opcao" role="radio" aria-checked="false" data-valor="outro">Outro valor</button>
+    </div>
+
+    <div class="outro" id="outro" hidden>
+      <label for="outro-valor">Digite o valor que deseja doar</label>
+      <div class="campo">
+        <span>R$</span>
+        <input type="text" id="outro-valor" inputmode="decimal" autocomplete="off" placeholder="0,00">
+      </div>
+    </div>
+
+    <p class="minimo">Valor mínimo de contribuição: R$ 5,00</p>
+    <p class="erro" id="erro" role="alert" hidden></p>
+
+    <button type="button" class="doar" id="btn-doar" aria-expanded="false" aria-controls="pix">Doar</button>
+
+    <div class="pix" id="pix" hidden>
+      <h3>Doe por Pix</h3>
+      <p class="escolhido">Valor escolhido: <strong id="pix-valor"></strong></p>
+
+      <!-- QR CODE: preenchido automaticamente pelo /api/charge -->
+      <img class="qr" id="pix-qr" alt="QR Code Pix para doar ao Snow">
+
+      <label for="pix-code">Pix copia e cola</label>
+      <!-- CÓDIGO PIX: preenchido automaticamente pelo /api/charge -->
+      <textarea id="pix-code" readonly></textarea>
+      <button type="button" class="copiar" id="btn-copiar">Copiar código</button>
+
+      <p class="aviso">Ao pagar, confirme no app do seu banco o valor escolhido. O valor vai 100% para o tratamento do Snow. Obrigado por ajudar!</p>
+    </div>
+  </section>
+
+
 
   <!-- FOTO DO SNOW: o arquivo precisa estar na mesma pasta do index.html -->
   <div class="foto"><img src="file_000000008524820eb7dc0cd9cbd92871.png" alt="Snow, o cachorro da família"></div>
@@ -296,50 +345,8 @@
     <p class="meta">Meta: <strong>R$ 6.500,00</strong></p>
   </section>
 
-  <!-- FOTO: o arquivo precisa estar na mesma pasta do index.html -->
-  <div class="foto foto-fim"><img src="1000303741.jpg" alt="Snow"></div>
-
   <section class="texto">
-    <h2>Escolha um valor para ajudar</h2>
-
-    <p class="meta">Meta: <strong>R$ 6.500,00</strong></p>
-
-    <div class="opcoes" role="radiogroup" aria-label="Valor da doação">
-      <button type="button" class="opcao" role="radio" aria-checked="false" data-valor="5">R$ 5</button>
-      <button type="button" class="opcao" role="radio" aria-checked="false" data-valor="10">R$ 10</button>
-      <button type="button" class="opcao" role="radio" aria-checked="false" data-valor="20">R$ 20</button>
-      <button type="button" class="opcao" role="radio" aria-checked="false" data-valor="50">R$ 50</button>
-      <button type="button" class="opcao" role="radio" aria-checked="false" data-valor="100">R$ 100</button>
-      <button type="button" class="opcao" role="radio" aria-checked="false" data-valor="outro">Outro valor</button>
-    </div>
-
-    <div class="outro" id="outro" hidden>
-      <label for="outro-valor">Digite o valor que deseja doar</label>
-      <div class="campo">
-        <span>R$</span>
-        <input type="text" id="outro-valor" inputmode="decimal" autocomplete="off" placeholder="0,00">
-      </div>
-    </div>
-
-    <p class="minimo">Valor mínimo de contribuição: R$ 5,00</p>
-    <p class="erro" id="erro" role="alert" hidden></p>
-
-    <button type="button" class="doar" id="btn-doar" aria-expanded="false" aria-controls="pix">Doar</button>
-
-    <div class="pix" id="pix" hidden>
-      <h3>Doe por Pix</h3>
-      <p class="escolhido">Valor escolhido: <strong id="pix-valor"></strong></p>
-
-      <!-- QR CODE: preenchido automaticamente pelo /api/charge -->
-      <img class="qr" id="pix-qr" alt="QR Code Pix para doar ao Snow">
-
-      <label for="pix-code">Pix copia e cola</label>
-      <!-- CÓDIGO PIX: preenchido automaticamente pelo /api/charge -->
-      <textarea id="pix-code" readonly></textarea>
-      <button type="button" class="copiar" id="btn-copiar">Copiar código</button>
-
-      <p class="aviso">Ao pagar, confirme no app do seu banco o valor escolhido. O valor vai 100% para o tratamento do Snow. Obrigado por ajudar!</p>
-    </div>
+    <a class="doar" href="#doar-topo">Quero ajudar o Snow</a>
   </section>
 
 </main>
