@@ -57,22 +57,83 @@
   .texto p { margin: 0 0 1.4rem; max-width: 38rem; }
   .texto p:first-child { font-size: 1.25rem; }
   .texto strong { color: var(--azul); font-weight: 600; }
+
+  .texto h2 {
+    font-family: "Bricolage Grotesque", "Helvetica Neue", Arial, sans-serif;
+    font-weight: 800;
+    font-size: clamp(1.6rem, 6vw, 2.1rem);
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    margin: 2.5rem 0 1rem;
+  }
+  .texto h3 {
+    font-family: "Bricolage Grotesque", "Helvetica Neue", Arial, sans-serif;
+    font-weight: 800;
+    font-size: 1.3rem;
+    margin: 2rem 0 0.75rem;
+  }
+  .valores { list-style: none; margin: 0 0 1.5rem; padding: 0; max-width: 38rem; }
+  .valores li {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.6rem 0;
+    border-bottom: 1px solid var(--gelo);
+  }
+  .valores li span:last-child { white-space: nowrap; font-weight: 600; }
+
+  .foto-fim { margin: 2rem 0 0; }
 </style>
 </head>
 <body>
 <main>
 
-  <h1>Ajude o Snow a vencer essa batalha: precisamos custear sua cirurgia</h1>
+  <!-- FOTO DO SNOW: o arquivo precisa estar na mesma pasta do index.html -->
+  <div class="foto"><img src="file_000000008524820eb7dc0cd9cbd92871.png" alt="Snow, o cachorro da família"></div>
 
-  <!-- FOTO DO SNOW: cole aqui o código da foto no lugar do bloco abaixo -->
-  <div class="foto">Foto do Snow</div>
+  <h1>Ajude o Snow a vencer essa batalha: precisamos custear sua cirurgia</h1>
 
   <section class="texto">
     <p>O Snow faz parte da nossa família desde 2019, quando chegou até nós com apenas 4 meses de vida. Hoje, depois de quase 7 anos, ele continua muito amado por todos ao seu redor.</p>
 
     <p>Durante todos esses anos, o Snow sempre foi um cachorro muito saudável. Nunca imaginamos que precisaríamos passar por uma situação como esta. Infelizmente, ele foi diagnosticado com <strong>mastocitoma</strong>, um tipo de tumor agressivo que precisa ser tratado, e agora precisamos nos organizar para realizar sua cirurgia em breve.</p>
 
+    <p>O tratamento indicado envolve não apenas a cirurgia para retirada do mastocitoma, mas também a eletroquimioterapia, um procedimento que faz parte do planejamento para tratar o tumor. Por isso, precisamos custear as duas etapas, além dos exames pré-operatórios necessários para avaliar as condições de saúde do Snow antes da cirurgia.</p>
+
+    <p>Quando um animal faz parte da nossa família, é muito difícil não sentir medo ao descobrir que ele precisa enfrentar algo assim. Queremos dar ao Snow os cuidados necessários, mas os custos do tratamento são altos e, por isso, estamos pedindo ajuda.</p>
+
+    <h2>Para onde vai o dinheiro?</h2>
+
+    <p>Estamos organizando esta vaquinha para custear os exames pré-operatórios e a cirurgia do Snow. Já temos os orçamentos da clínica veterinária e queremos compartilhar os valores com transparência.</p>
+
+    <h3>Exames pré-operatórios: R$ 890,00</h3>
+
+    <ul class="valores">
+      <li><span>Ecocardiograma</span><span>R$ 230,00</span></li>
+      <li><span>Eletrocardiograma</span><span>R$ 140,00</span></li>
+      <li><span>Raio-X de tórax em 3 projeções</span><span>R$ 240,00</span></li>
+      <li><span>Exames de sangue</span><span>R$ 280,00</span></li>
+    </ul>
+
     <!-- CONTINUE O TEXTO AQUI, logo abaixo, com novos <p>...</p> -->
+  </section>
+
+  <!-- SEGUNDA FOTO: o arquivo precisa estar na mesma pasta do index.html -->
+  <div class="foto foto-fim"><img src="file_0000000020e4820ea5e3d6d48035cdee.png" alt="Snow"></div>
+
+  <!-- TERCEIRA FOTO: o arquivo precisa estar na mesma pasta do index.html -->
+  <div class="foto foto-fim"><img src="1000303722.jpg" alt="Snow"></div>
+
+  <section class="texto">
+    <h3>Cirurgia e procedimentos: R$ 5.130,00</h3>
+
+    <ul class="valores">
+      <li><span>Retirada do mastocitoma associada à eletroquimioterapia</span><span>R$ 2.351,00</span></li>
+      <li><span>Eletroquimioterapia</span><span>R$ 1.989,00</span></li>
+      <li><span>Anestesia geral inalatória</span><span>R$ 790,00</span></li>
+    </ul>
+
+    <!-- CONTINUE O TEXTO AQUI, logo abaixo -->
   </section>
 
 </main>
