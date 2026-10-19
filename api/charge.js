@@ -9,10 +9,12 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: "Método não permitido" });
   }
 
-  const apiKey = process.env.PROVIDER_API_KEY;
-  if (!apiKey) {
-    return res.status(500).json({ error: "Chave da API não configurada" });
+  const id = process.env.PROVIDER_CLIENT_ID;
+  const secret = process.env.PROVIDER_CLIENT_SECRET;
+  if (!id || !secret) {
+    return res.status(500).json({ error: "Credenciais não configuradas" });
   }
+  const auth = Buffer.from(`${id}:${secret}`).toString("base64");
 
   const reais = Number(req.body?.valor);
   if (!Number.isFinite(reais) || reais < 5 || reais > 10000) {
@@ -24,7 +26,7 @@ export default async function handler(req, res) {
     const r = await fetch(PROVIDER_URL, {
       method: "POST",
       headers: {
-        Authorization: apiKey,
+        Authorization: `Basic ${auth}`,
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
