@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -84,6 +83,87 @@
   .valores li span:last-child { white-space: nowrap; font-weight: 600; }
 
   .foto-fim { margin: 2rem 0 0; }
+
+  .opcoes {
+    list-style: none;
+    margin: 0 0 1rem;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(7.5rem, 1fr));
+    gap: 0.75rem;
+    max-width: 38rem;
+  }
+  .opcoes li {
+    background: #fff;
+    border: 2px solid var(--gelo);
+    border-radius: 1rem;
+    padding: 0.9rem 0.5rem;
+    text-align: center;
+    font-family: "Bricolage Grotesque", "Helvetica Neue", Arial, sans-serif;
+    font-weight: 800;
+    font-size: 1.25rem;
+    color: var(--azul);
+  }
+  .minimo { font-size: 1rem; color: var(--suave); margin: 0; }
+
+  .doar {
+    display: block;
+    width: 100%;
+    max-width: 38rem;
+    margin: 1.5rem 0 0;
+    padding: 1.1rem 1rem;
+    border: 0;
+    border-radius: 1rem;
+    background: var(--azul);
+    color: #fff;
+    font-family: "Bricolage Grotesque", "Helvetica Neue", Arial, sans-serif;
+    font-weight: 800;
+    font-size: 1.4rem;
+    letter-spacing: -0.01em;
+    cursor: pointer;
+  }
+  .doar:focus-visible, .copiar:focus-visible { outline: 3px solid var(--tinta); outline-offset: 3px; }
+
+  .pix {
+    max-width: 38rem;
+    margin: 1.25rem 0 0;
+    padding: 1.25rem;
+    background: #fff;
+    border: 2px solid var(--gelo);
+    border-radius: 1.25rem;
+    text-align: center;
+  }
+  .pix[hidden] { display: none; }
+  .pix h3 { margin: 0 0 0.75rem; }
+  .pix .qr { width: 12.5rem; max-width: 100%; height: auto; border-radius: 0.75rem; display: block; margin: 0 auto 1.25rem; }
+  .pix label { display: block; font-size: 1rem; color: var(--suave); margin: 0 0 0.4rem; }
+  .pix textarea {
+    width: 100%;
+    min-height: 5.5rem;
+    resize: none;
+    padding: 0.75rem;
+    border: 2px solid var(--gelo);
+    border-radius: 0.75rem;
+    background: var(--neve);
+    color: var(--tinta);
+    font-family: ui-monospace, Menlo, Consolas, monospace;
+    font-size: 0.85rem;
+    line-height: 1.4;
+    word-break: break-all;
+  }
+  .copiar {
+    margin: 0.75rem 0 0;
+    padding: 0.8rem 1.5rem;
+    border: 2px solid var(--azul);
+    border-radius: 0.75rem;
+    background: #fff;
+    color: var(--azul);
+    font-family: "Bricolage Grotesque", "Helvetica Neue", Arial, sans-serif;
+    font-weight: 800;
+    font-size: 1.05rem;
+    cursor: pointer;
+  }
+  .pix .aviso { font-size: 0.95rem; color: var(--suave); margin: 1rem 0 0; }
 </style>
 </head>
 <body>
@@ -126,11 +206,111 @@
   </section>
 
   <!-- FOTO NOVA: o arquivo precisa estar na mesma pasta do index.html -->
-  <div class="foto foto-fim"><img src="1000303717%20(1).jpg" alt="Snow"></div>
+  <div class="foto foto-fim"><img src="file_000000004d34820eb7efca19e1bb5303.png" alt="Snow"></div>
 
   <!-- FOTO: o arquivo precisa estar na mesma pasta do index.html -->
   <div class="foto foto-fim"><img src="1000303722.jpg" alt="Snow"></div>
 
+  <section class="texto">
+    <h3>Cirurgia e procedimentos: R$ 5.130,00</h3>
+
+    <ul class="valores">
+      <li><span>Retirada do mastocitoma associada à eletroquimioterapia</span><span>R$ 2.351,00</span></li>
+      <li><span>Eletroquimioterapia</span><span>R$ 1.989,00</span></li>
+      <li><span>Anestesia geral inalatória</span><span>R$ 790,00</span></li>
+    </ul>
+
+    <!-- CONTINUE O TEXTO AQUI, logo abaixo -->
+  </section>
+
+  <!-- FOTO: o arquivo precisa estar na mesma pasta do index.html -->
+  <div class="foto foto-fim"><img src="1000303723.jpg" alt="Snow"></div>
+
+  <!-- FOTO: o arquivo precisa estar na mesma pasta do index.html -->
+  <div class="foto foto-fim"><img src="1000303724.jpg" alt="Snow"></div>
+
+  <section class="texto">
+    <h3>Total orçado até o momento: R$ 6.020,00</h3>
+
+    <p>Nossa meta é arrecadar <strong>R$ 6.500,00</strong>, para cobrir os custos já orçados e ter uma pequena margem para possíveis despesas adicionais. Caso surjam novos custos, compartilharemos as informações e os valores com transparência.</p>
+
+    <h2>Como você pode ajudar?</h2>
+
+    <p>Qualquer contribuição, independentemente do valor, fará diferença para nós neste momento. Se não puder contribuir financeiramente, compartilhar esta vaquinha com amigos, familiares e nas redes sociais já nos ajuda muito.</p>
+
+    <p>O Snow está conosco desde filhotinho e faz parte da nossa história há quase 7 anos. Queremos fazer tudo o que estiver ao nosso alcance para que ele receba o tratamento de que precisa.</p>
+
+    <p>É muito difícil pedir ajuda, mas, nesse momento, toda solidariedade é bem vinda.</p>
+  </section>
+
+  <!-- FOTO: o arquivo precisa estar na mesma pasta do index.html -->
+  <div class="foto foto-fim"><img src="1000303741.jpg" alt="Snow"></div>
+
+  <section class="texto">
+    <h2>Escolha um valor para ajudar</h2>
+
+    <ul class="opcoes">
+      <li>R$ 5</li>
+      <li>R$ 10</li>
+      <li>R$ 20</li>
+      <li>R$ 50</li>
+      <li>R$ 100</li>
+      <li>Outro valor</li>
+    </ul>
+
+    <p class="minimo">Valor mínimo de contribuição: R$ 5,00</p>
+
+    <button type="button" class="doar" id="btn-doar" aria-expanded="false" aria-controls="pix">Doar</button>
+
+    <div class="pix" id="pix" hidden>
+      <h3>Doe por Pix</h3>
+
+      <!-- QR CODE: salve a imagem como qrcode.png na mesma pasta do index.html -->
+      <img class="qr" src="qrcode.png" alt="QR Code Pix para doar ao Snow">
+
+      <label for="pix-code">Pix copia e cola</label>
+      <!-- CÓDIGO PIX: troque o texto abaixo pelo seu código copia e cola -->
+      <textarea id="pix-code" readonly>COLE_AQUI_O_CODIGO_PIX_COPIA_E_COLA</textarea>
+      <button type="button" class="copiar" id="btn-copiar">Copiar código</button>
+
+      <p class="aviso">O valor vai 100% para o tratamento do Snow. Obrigado por ajudar!</p>
+    </div>
+  </section>
+
 </main>
+
+<script>
+  (function () {
+    var btnDoar = document.getElementById("btn-doar");
+    var painel = document.getElementById("pix");
+    var btnCopiar = document.getElementById("btn-copiar");
+    var campo = document.getElementById("pix-code");
+
+    btnDoar.addEventListener("click", function () {
+      var abrir = painel.hidden;
+      painel.hidden = !abrir;
+      btnDoar.setAttribute("aria-expanded", String(abrir));
+      if (abrir) painel.scrollIntoView({ behavior: "smooth", block: "nearest" });
+    });
+
+    btnCopiar.addEventListener("click", function () {
+      var texto = campo.value;
+      function ok() {
+        btnCopiar.textContent = "Código copiado!";
+        setTimeout(function () { btnCopiar.textContent = "Copiar código"; }, 2000);
+      }
+      function fallback() {
+        campo.select();
+        campo.setSelectionRange(0, texto.length);
+        try { document.execCommand("copy"); ok(); } catch (e) {}
+      }
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(texto).then(ok, fallback);
+      } else {
+        fallback();
+      }
+    });
+  })();
+</script>
 </body>
 </html>
