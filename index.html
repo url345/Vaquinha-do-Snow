@@ -93,7 +93,8 @@
     gap: 0.75rem;
     max-width: 38rem;
   }
-  .opcoes li {
+  .opcao {
+    width: 100%;
     background: #fff;
     border: 2px solid var(--gelo);
     border-radius: 1rem;
@@ -103,7 +104,56 @@
     font-weight: 800;
     font-size: 1.25rem;
     color: var(--azul);
+    cursor: pointer;
   }
+  .opcao[aria-checked="true"] { background: var(--azul); border-color: var(--azul); color: #fff; }
+  .opcao:focus-visible, .outro input:focus-visible { outline: 3px solid var(--tinta); outline-offset: 3px; }
+
+  .outro { max-width: 38rem; margin: 1rem 0 0; }
+  .outro[hidden] { display: none; }
+  .outro label { display: block; font-size: 1rem; color: var(--suave); margin: 0 0 0.4rem; }
+  .outro .campo {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: #fff;
+    border: 2px solid var(--gelo);
+    border-radius: 1rem;
+    padding: 0 1rem;
+  }
+  .outro .campo span {
+    font-family: "Bricolage Grotesque", "Helvetica Neue", Arial, sans-serif;
+    font-weight: 800;
+    font-size: 1.25rem;
+    color: var(--suave);
+  }
+  .outro input {
+    flex: 1;
+    min-width: 0;
+    border: 0;
+    background: transparent;
+    padding: 0.9rem 0;
+    font-family: "Bricolage Grotesque", "Helvetica Neue", Arial, sans-serif;
+    font-weight: 800;
+    font-size: 1.25rem;
+    color: var(--tinta);
+  }
+  .erro { color: #B42318; font-size: 1rem; margin: 0.75rem 0 0; }
+  .erro[hidden] { display: none; }
+  .escolhido { font-size: 1.1rem; margin: 0 0 1rem; }
+
+  .texto p.meta {
+    display: inline-block;
+    margin: 0 0 1.25rem;
+    padding: 0.6rem 1.1rem;
+    background: var(--gelo);
+    border-radius: 999px;
+    font-family: "Bricolage Grotesque", "Helvetica Neue", Arial, sans-serif;
+    font-weight: 800;
+    font-size: 1.25rem;
+    color: var(--tinta);
+  }
+  .texto p.meta strong { color: var(--azul); font-weight: 800; }
   .minimo { font-size: 1rem; color: var(--suave); margin: 0; }
 
   .doar {
@@ -241,6 +291,8 @@
     <p>O Snow está conosco desde filhotinho e faz parte da nossa história há quase 7 anos. Queremos fazer tudo o que estiver ao nosso alcance para que ele receba o tratamento de que precisa.</p>
 
     <p>É muito difícil pedir ajuda, mas, nesse momento, toda solidariedade é bem vinda.</p>
+
+    <p class="meta">Meta: <strong>R$ 6.500,00</strong></p>
   </section>
 
   <!-- FOTO: o arquivo precisa estar na mesma pasta do index.html -->
@@ -249,21 +301,33 @@
   <section class="texto">
     <h2>Escolha um valor para ajudar</h2>
 
-    <ul class="opcoes">
-      <li>R$ 5</li>
-      <li>R$ 10</li>
-      <li>R$ 20</li>
-      <li>R$ 50</li>
-      <li>R$ 100</li>
-      <li>Outro valor</li>
-    </ul>
+    <p class="meta">Meta: <strong>R$ 6.500,00</strong></p>
+
+    <div class="opcoes" role="radiogroup" aria-label="Valor da doação">
+      <button type="button" class="opcao" role="radio" aria-checked="false" data-valor="5">R$ 5</button>
+      <button type="button" class="opcao" role="radio" aria-checked="false" data-valor="10">R$ 10</button>
+      <button type="button" class="opcao" role="radio" aria-checked="false" data-valor="20">R$ 20</button>
+      <button type="button" class="opcao" role="radio" aria-checked="false" data-valor="50">R$ 50</button>
+      <button type="button" class="opcao" role="radio" aria-checked="false" data-valor="100">R$ 100</button>
+      <button type="button" class="opcao" role="radio" aria-checked="false" data-valor="outro">Outro valor</button>
+    </div>
+
+    <div class="outro" id="outro" hidden>
+      <label for="outro-valor">Digite o valor que deseja doar</label>
+      <div class="campo">
+        <span>R$</span>
+        <input type="text" id="outro-valor" inputmode="decimal" autocomplete="off" placeholder="0,00">
+      </div>
+    </div>
 
     <p class="minimo">Valor mínimo de contribuição: R$ 5,00</p>
+    <p class="erro" id="erro" role="alert" hidden></p>
 
     <button type="button" class="doar" id="btn-doar" aria-expanded="false" aria-controls="pix">Doar</button>
 
     <div class="pix" id="pix" hidden>
       <h3>Doe por Pix</h3>
+      <p class="escolhido">Valor escolhido: <strong id="pix-valor"></strong></p>
 
       <!-- QR CODE: salve a imagem como qrcode.png na mesma pasta do index.html -->
       <img class="qr" src="qrcode.png" alt="QR Code Pix para doar ao Snow">
@@ -273,7 +337,7 @@
       <textarea id="pix-code" readonly>COLE_AQUI_O_CODIGO_PIX_COPIA_E_COLA</textarea>
       <button type="button" class="copiar" id="btn-copiar">Copiar código</button>
 
-      <p class="aviso">O valor vai 100% para o tratamento do Snow. Obrigado por ajudar!</p>
+      <p class="aviso">Ao pagar, confirme no app do seu banco o valor escolhido. O valor vai 100% para o tratamento do Snow. Obrigado por ajudar!</p>
     </div>
   </section>
 
@@ -286,11 +350,78 @@
     var btnCopiar = document.getElementById("btn-copiar");
     var campo = document.getElementById("pix-code");
 
+    var MINIMO = 5;
+    var opcoes = document.querySelectorAll(".opcao");
+    var boxOutro = document.getElementById("outro");
+    var inputOutro = document.getElementById("outro-valor");
+    var erro = document.getElementById("erro");
+    var pixValor = document.getElementById("pix-valor");
+    var escolha = null; // "5", "10", ..., "outro" ou null
+
+    function moeda(n) {
+      return "R$ " + n.toFixed(2).replace(".", ",");
+    }
+
+    function lerValor() {
+      if (escolha === null) return null;
+      var n;
+      if (escolha === "outro") {
+        var t = inputOutro.value.replace(/[^\d,.]/g, "");
+        if (t.indexOf(",") > -1) t = t.replace(/\./g, "").replace(",", ".");
+        n = parseFloat(t);
+      } else {
+        n = parseFloat(escolha);
+      }
+      return isNaN(n) ? null : n;
+    }
+
+    function mostrarErro(msg) {
+      erro.textContent = msg;
+      erro.hidden = !msg;
+    }
+
+    function atualizarPainel() {
+      var v = lerValor();
+      if (v !== null && v >= MINIMO) pixValor.textContent = moeda(v);
+    }
+
+    opcoes.forEach(function (b) {
+      b.addEventListener("click", function () {
+        escolha = b.getAttribute("data-valor");
+        opcoes.forEach(function (o) { o.setAttribute("aria-checked", String(o === b)); });
+        boxOutro.hidden = escolha !== "outro";
+        mostrarErro("");
+        if (escolha === "outro") inputOutro.focus();
+        atualizarPainel();
+      });
+    });
+
+    inputOutro.addEventListener("input", function () {
+      mostrarErro("");
+      atualizarPainel();
+    });
+
     btnDoar.addEventListener("click", function () {
-      var abrir = painel.hidden;
-      painel.hidden = !abrir;
-      btnDoar.setAttribute("aria-expanded", String(abrir));
-      if (abrir) painel.scrollIntoView({ behavior: "smooth", block: "nearest" });
+      if (!painel.hidden) {
+        painel.hidden = true;
+        btnDoar.setAttribute("aria-expanded", "false");
+        return;
+      }
+      var v = lerValor();
+      if (escolha === null) {
+        mostrarErro("Escolha um valor para continuar.");
+        return;
+      }
+      if (v === null || v < MINIMO) {
+        mostrarErro("O valor mínimo de contribuição é R$ 5,00.");
+        if (escolha === "outro") inputOutro.focus();
+        return;
+      }
+      mostrarErro("");
+      pixValor.textContent = moeda(v);
+      painel.hidden = false;
+      btnDoar.setAttribute("aria-expanded", "true");
+      painel.scrollIntoView({ behavior: "smooth", block: "nearest" });
     });
 
     btnCopiar.addEventListener("click", function () {
