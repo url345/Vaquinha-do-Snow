@@ -36,9 +36,19 @@ export default async function handler(req, res) {
       }),
     });
 
-    const data = await r.json();
+    const texto = await r.text();
+    let data;
+    try {
+      data = JSON.parse(texto);
+    } catch {
+      data = { raw: texto };
+    }
+
     if (!r.ok) {
-      return res.status(502).json({ error: "Falha ao criar cobrança" });
+      console.error("Provedor:", r.status, texto);
+      return res.status(502).json({
+        error: `Falha ao criar cobrança (${r.status}): ${texto.slice(0, 200)}`,
+      });
     }
 
     const c = data.charge || data;
@@ -47,7 +57,8 @@ export default async function handler(req, res) {
       qrCodeImage: c.qrCodeImage,
       paymentLinkUrl: c.paymentLinkUrl,
     });
-  } catch {
+  } catch (e) {
+    console.error("Erro interno:", e);
     return res.status(500).json({ error: "Erro interno" });
   }
 }
