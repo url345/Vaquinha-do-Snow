@@ -172,6 +172,7 @@
     letter-spacing: -0.01em;
     cursor: pointer;
   }
+  .doar:disabled { opacity: 0.7; cursor: wait; }
   .doar:focus-visible, .copiar:focus-visible { outline: 3px solid var(--tinta); outline-offset: 3px; }
 
   .pix {
@@ -329,12 +330,12 @@
       <h3>Doe por Pix</h3>
       <p class="escolhido">Valor escolhido: <strong id="pix-valor"></strong></p>
 
-      <!-- QR CODE: salve a imagem como qrcode.png na mesma pasta do index.html -->
-      <img class="qr" src="qrcode.png" alt="QR Code Pix para doar ao Snow">
+      <!-- QR CODE: preenchido automaticamente pelo /api/charge -->
+      <img class="qr" id="pix-qr" alt="QR Code Pix para doar ao Snow">
 
       <label for="pix-code">Pix copia e cola</label>
-      <!-- CÓDIGO PIX: troque o texto abaixo pelo seu código copia e cola -->
-      <textarea id="pix-code" readonly>COLE_AQUI_O_CODIGO_PIX_COPIA_E_COLA</textarea>
+      <!-- CÓDIGO PIX: preenchido automaticamente pelo /api/charge -->
+      <textarea id="pix-code" readonly></textarea>
       <button type="button" class="copiar" id="btn-copiar">Copiar código</button>
 
       <p class="aviso">Ao pagar, confirme no app do seu banco o valor escolhido. O valor vai 100% para o tratamento do Snow. Obrigado por ajudar!</p>
@@ -380,9 +381,10 @@
       erro.hidden = !msg;
     }
 
+    // Se a pessoa mudar o valor, esconde o QR antigo para não pagar o valor errado
     function atualizarPainel() {
-      var v = lerValor();
-      if (v !== null && v >= MINIMO) pixValor.textContent = moeda(v);
+      painel.hidden = true;
+      btnDoar.setAttribute("aria-expanded", "false");
     }
 
     opcoes.forEach(function (b) {
@@ -401,7 +403,7 @@
       atualizarPainel();
     });
 
-    btnDoar.addEventListener("click", function () {
+    btnDoar.addEventListener("click", async function () {
       if (!painel.hidden) {
         painel.hidden = true;
         btnDoar.setAttribute("aria-expanded", "false");
@@ -418,10 +420,28 @@
         return;
       }
       mostrarErro("");
-      pixValor.textContent = moeda(v);
-      painel.hidden = false;
-      btnDoar.setAttribute("aria-expanded", "true");
-      painel.scrollIntoView({ behavior: "smooth", block: "nearest" });
+      btnDoar.disabled = true;
+      btnDoar.textContent = "Gerando Pix...";
+      try {
+        var r = await fetch("/api/charge", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ valor: v })
+        });
+        var data = await r.json();
+        if (!r.ok) throw new Error(data.error || "Erro ao gerar o Pix");
+        document.getElementById("pix-qr").src = data.qrCodeImage;
+        campo.value = data.brCode;
+        pixValor.textContent = moeda(v);
+        painel.hidden = false;
+        btnDoar.setAttribute("aria-expanded", "true");
+        painel.scrollIntoView({ behavior: "smooth", block: "nearest" });
+      } catch (e) {
+        mostrarErro(e.message || "Erro de conexão. Tente novamente.");
+      } finally {
+        btnDoar.disabled = false;
+        btnDoar.textContent = "Doar";
+      }
     });
 
     btnCopiar.addEventListener("click", function () {
